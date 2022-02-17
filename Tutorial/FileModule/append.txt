@@ -1,0 +1,5 @@
+The appended result of first and second file are : 
+
+            This is the first text file. 
+
+            This is the second text file.
