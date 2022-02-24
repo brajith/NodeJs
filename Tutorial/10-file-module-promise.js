@@ -17,14 +17,12 @@ const getText = (path) => {
 const getTextAsync = async () => {
 
     //awiting for the below method call to complete
-    await getText('./FileModule/first.txt')
-    .then(result => console.log(result))
-    .catch(err => console.log(err))
+    const first = await getText('./FileModule/first.txt')
+    console.log(first);
 
     //awiting for the below method call to complete
-    await getText('./FileModule/second.txt')
-    .then(result => console.log(result))
-    .catch(err => console.log(err))
+    const second = await getText('./FileModule/second.txt')
+    console.log(second);
 }
 
 getTextAsync();
