@@ -2,7 +2,9 @@ const express = require('express')
 const app = express()
 const path = require('path')
 
+//It uses express predifined middleware
 app.use(express.static('./public'))
+
 app.get('/', (req, res) => {
     res.status(200).sendFile(path.resolve(__dirname, './navbar-app/index.html'))
 })
