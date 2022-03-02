@@ -4,8 +4,8 @@ const app = express()
 
 app.use(express.static('./methods-public'))
 
-//This middleware helps to get the Json data from the POST request
-app.use(express.json())
+//This middleware helps to get the form data from the POST request
+app.use(express.urlencoded({ extended: false }))
 
 app.get('/api/people', (req, res) => {
     res.send({
@@ -23,17 +23,6 @@ app.post('/login', (req, res) => {
     else {
         res.status(401).send(`Please enter the credentials`)
     }
-})
-
-//Post data sent using javascript 
-app.post('/api/people', (req, res) => {
-    const { name } = req.body
-
-    if(!name) {
-        return res.status(400).json({ success: false, msg: "please provide name value" })
-    }
-    people.push({ id: 6, name: name})
-    res.status(201).json({ success: true, person: name })
 })
 
 
