@@ -1,21 +1,46 @@
-const express = require('express')
-const { people } = require('./Data/data')
-const app = express()
+//Controller file hold all the logic for particular route
 
-app.use(express.static('./methods-public'))
+const { people } = require('../../Data/data')
 
-//This middleware helps to get the Json data from the POST request
-app.use(express.json())
+const createPeople = (req, res) => {
+    const { name } = req.body
 
-app.get('/api/people', (req, res) => {
+    if(!name) {
+        return res.status(400).json({ success: false, msg: "please provide name value" })
+    }
+    people.push({ id: 6, name: name})
+    res.status(201).json({ success: true, person: name })
+}
+
+const getPeople = (req, res) => {
     res.send({
         success: true,
         data: people
     })
-})
+}
 
-//PUT Method
-app.put('/api/people/:id', (req, res) => {
+const getPerson = (req, res) => {
+    const { id } = req.params
+
+    //find the person object that matches with the id
+    const person = people.find(p => p.id === Number(id))
+
+    //If the person doesnot exits then return 404 message
+    if(!person) {
+        return res.status(404).json({
+                success: false,
+                msg: `Person with id ${ id } is not present`
+            })
+    }
+
+    //Send updated data
+    res.status(200).json({
+        success: true,
+        data: person
+    })
+}
+
+const updatePeople = (req, res) => {
     const { id } = req.params
     const { name } = req.body
 
@@ -43,10 +68,9 @@ app.put('/api/people/:id', (req, res) => {
         success: true,
         data: newPeople
     })
-})
+}
 
-
-app.delete('/api/people/:id', (req, res) => {
+const deletePeople = (req, res) => {
     const { id } = req.params
 
     //find the person object that matches with the id
@@ -67,8 +91,12 @@ app.delete('/api/people/:id', (req, res) => {
         success: true,
         data: newPeople
     })
-})
+}
 
-app.listen(5000, () => {
-    console.log("Server is listining at port 5000...");
-})
+module.exports = {
+    createPeople,
+    getPeople,
+    getPerson,
+    updatePeople,
+    deletePeople
+}
